@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <script src="app.js"></script>
+    <title>ChatX</title>
+</head>
+<body>
+  <div class="navbar">
+    <div class="dropdown">
+      <button class="dropbtn">Menu</button>
+      <div class="dropdown-content">
+        <% if (usuarioLogado) { %>
+          <a href="/logout">Sair</a>
+        <% } else { %>
+          <a href="/login">Logar</a>
+          <a href="/cadastro">Registrar</a>
+        <% } %>
+      </div>
+    </div>
+        <p class="nome" onclick="inicio()">ChatX</p>
+        <% if (usuarioLogado) { %>
+          <p class="User">Bem-vindo, <%= usuarioLogado %>,&nbsp;</p>
+          <a class="sair" href="/logout">Deslogar</a>
+        <% } else { %>
+          <ul>
+            <li class="Login"><a href="/login">Login</a></li>
+            <li class="Registrar"><a href="/cadastro">Registro</a></li>
+          </ul>
+        <% } %>
+      </div>
+      <div class="content">
+        <div class="text">
+          Chats mais recentes
+        </div>
+      </div>  
+      <br>
+      <div class="cards">
+        <div class="card">
+          <h3 class="title_card">Faculdade</h3>
+          <p>A vida universitária é cheia de desafios, descobertas e crescimentoento, participar de atividades extracurriculares e fazer amizades duradouras, conheça universitários nesse chat.</p>
+          <div id="entrar">
+            <button class="entrar_chat">Entrar</button>
+          </div> 
+        </div>
+
+        <div class="card">
+          <h3 class="title_card">Saúde</h3>
+          <p>A saúde é o alicerce de uma vida plena. Cuidar do corpo e da mente é fundamental para o equilíbrio e o bem-estar. Alimentação saudável, exercícios físicos e momentos de descanso são pilares para uma vida saudável.</p>
+          <div id="entrar">
+            <button class="entrar_chat">Entrar</button>
+          </div>
+          
+        </div>
+        <div class="card">
+          <h3 class="title_card" >Artes</h3>
+          <p>As artes são expressões que transcendem limites, revelando a beleza e a essência do mundo. Pintura, música, dança e teatro nos envolvem em um universo mágico de criatividade e emoção.</p>
+          <div id="entrar">
+            <button class="entrar_chat">Entrar</button>
+          </div> 
+        </div>
+      </div> 
+
+      <br>
+
+      <div class="cards">
+        <div class="card">
+          <h3 class="title_card">Empreendedorismo</h3>
+          <p>Empreendedorismo é o combustível que impulsiona a inovação e o crescimento. É a busca incansável por transformar ideias em ações concretas, superar desafios e criar oportunidades.</p>
+          <div id="entrar">
+            <button class="entrar_chat">Entrar</button>
+          </div>
+          
+        </div>
+        <div class="card">
+          <h3 class="title_card">Games</h3>
+          <p>Os games são mais do que meros entretenimentos. Eles nos transportam para mundos incríveis, nos desafiam, nos conectam com outros jogadores ao redor do mundo e despertam nossa paixão pelo universo dos videogames.</p>
+          <div id="entrar">
+            <button class="entrar_chat">Entrar</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="title_card">Política</h3>
+          <p>A política é uma área fundamental em nossa sociedade. Ela envolve a tomada de decisões, a busca por igualdade, a defesa dos direitos humanos e a construção de um futuro melhor para todos.</p>
+          <div id="entrar">
+            <button class="entrar_chat">Entrar</button>
+          </div>
+        </div>
+      </div> 
+      <div id="nomeUsuario"></div>
+      <script src="app.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+      <script>
+     const socket = io();
+
+socket.on('redirecionarChat', (url) => {
+  window.location.href = url;
+});
+
+const entrarButtons = document.querySelectorAll('.entrar_chat');
+
+entrarButtons.forEach((button) => {
+  button.addEventListener('click', (event) => {
+    const categoria = event.target.parentNode.parentNode.querySelector('.title_card').textContent;
+
+    // Redireciona o usuário para a página de chat específica e envia a categoria
+    socket.emit('entrarSala', { categoria: categoria });
+  });
+});
+function inicio(){
+  window.location.href = "/";
+}
+      </script>
+
+    </body>
+    </html>
+
+</body>
+</html>

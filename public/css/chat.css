@@ -1,0 +1,79 @@
+
+    body {
+      background-color: #1E1E1E;
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .navbar {
+        background-color: #262626;
+        height: 93px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+      }
+      .navbar p {
+        color: #fff;
+        margin: 0;
+        flex-grow: 1;
+        text-align: center;
+        font-size: 32px;
+      } 
+      .chatx{
+        cursor: pointer;
+      }     
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      color: #fff;
+    }
+    
+    .chat {
+      background-color: #333;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    
+    .message {
+      margin-bottom: 10px;
+    }
+    
+    .message .sender {
+      font-weight: bold;
+      color: #007bff;
+    }
+    
+    .message .content {
+      color: #fff;
+    }
+    
+    .input-group {
+      display: flex;
+      margin-top: 20px;
+    }
+    
+    .input-group input {
+      flex-grow: 1;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    
+    .input-group button {
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+#categoriaValue{
+  display: none;
+}
+#usuarioValue{
+  display:none;
+}

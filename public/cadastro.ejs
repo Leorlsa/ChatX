@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" type="text/css" href="/css/cadastro.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  
+    <div class="container">
+        <form action="/cadastro" method="POST">
+          <h2>Cadastrar</h2>
+          <div class="input-group">
+            <label for="username">Usuário</label>
+            <input type="text" id="validateUser" name="usuario" placeholder="Usuário" required onKeyPress="validateUsuario()">
+          </div>
+          <div class="input-group">
+            <label for="password">Senha</label>
+            <input type="password" name="senha" placeholder="Senha" required onKeyPress="validatePassword()">
+          </div>
+          <div class="input-group">
+            <label class="confirmarSenha" for="password">Confirmar Senha</label>
+            <input type="password" id="confirmPassword" placeholder="Confirmar senha" name="confirm_password" required oninput="validateConfirmPassword()">
+          </div>
+         <% if (typeof mensagem !== 'undefined') { %>
+      <span class="mensagem-erro"><%= mensagem %></span>
+    <% } %>
+          <button type="submit">Cadastrar</button>
+          <a href="/login">Ja sou cadastrado.</a>
+          <p id="usuarioErrorMessage"></p>
+          <p id="senhaErrorMessage"></p>
+          <p id="consenhaErrorMessage"></p>
+        
+        </form>
+      </div>
+      
+</body>
+<script>
+    const form = document.querySelector('form');
+    const usuarioInput = document.getElementById('validateUser')
+    const passwordInput = document.querySelector('input[name="senha"]');
+    const confirmPasswordInput = document.querySelector('input[name="confirm_password"]');
+    const errorMessage = document.getElementById('usuarioErrorMessage');
+    const senhaMessage = document.getElementById('senhaErrorMessage');
+    const Con_senhaMessage = document.getElementById('consenhaErrorMessage');
+    function validateUsuario() {
+      if (usuarioInput.value.length <= 5) {
+        errorMessage.textContent = 'O usuário deve ter pelo menos 5 caracteres.';
+      } else {
+        errorMessage.textContent = '';
+      }
+    };
+  
+    function validatePassword (){
+      if (passwordInput.value.length < 6) {
+        senhaMessage.textContent = 'A senha deve ter pelo menor 6 caracteres';
+      } else {
+        senhaMessage.textContent = '';
+      }
+    };
+  
+    function validateConfirmPassword () {
+      if (passwordInput.value !== confirmPasswordInput.value) {
+        Con_senhaMessage.textContent = 'As senhas não estão iguais.';
+      } else {
+        Con_senhaMessage.textContent = '';
+      }
+    };
+  
+    form.addEventListener('submit', (event) => {
+    // Verificar as validações antes do envio do formulário
+    validateUsuario();
+    validatePassword();
+    validateConfirmPassword();
+
+    if (
+      errorMessage.textContent !== '' ||
+      senhaMessage.textContent !== '' ||
+      Con_senhaMessage.textContent !== ''
+    ) {
+      event.preventDefault(); // Impede o envio do formulário caso haja alguma validação incorreta
+    }
+  });
+  
+    usuarioInput.addEventListener('input', validateUsuario);
+    passwordInput.addEventListener('input', validatePassword);
+    confirmPasswordInput.addEventListener('input', validateConfirmPassword);
+  </script>
+  
+  
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/css/chat.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="navbar">
+    <p class="chatx" onclick="inicio()">ChatX</p>
+  </div>
+  <h2 id="categoriaValue"><%= categoria %></h2>
+
+
+
+  <div class="container">
+    <div id="chatContainer" class="chat">
+      <!-- Mensagens existentes -->
+      <div class="message">
+        <span class="sender">John:</span>
+        <span class="content">Hello!</span>
+      </div>
+      <div class="message">
+        <span class="sender">Jane:</span>
+        <span class="content"> Hi there!</span>
+      </div>
+      <div class="message">
+        <span class="sender">John:</span>
+        <span class="content">How are you?</span>
+      </div>
+    </div>
+  
+    <div class="input-group">
+      <input id="mensagemInput" type="text" placeholder="Digite sua mensagem">
+      <button id="enviarMensagemButton">Enviar</button>
+     
+    </div>
+    <span id="limite"></span>
+    <% if (usuario && usuario.usuario) { %>
+      <h3 id="userValue">Olá, <%= usuario.usuario %> você está no chat de <%= categoria %>.</h3>
+    <% } %>
+    
+  </div>
+  <h3 id="usuarioValue"><%= usuario && usuario.usuario %></h3>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    
+  const socket = io();
+const categoria = document.getElementById('categoriaValue').textContent;
+socket.emit('entrarSala', { categoria: categoria });
+socket.emit('obterMensagens');
+
+// Função para adicionar uma nova mensagem ao chat
+function adicionarMensagem(sender, content) {
+  console.log('Nova mensagem recebida:', sender, content);
+  const chatContainer = document.getElementById('chatContainer');
+
+  const messageElement = document.createElement('div');
+  messageElement.classList.add('message');
+
+  const senderElement = document.createElement('span');
+  senderElement.classList.add('sender');
+  senderElement.textContent = sender + ':';
+
+  const contentElement = document.createElement('span');
+  contentElement.classList.add('content');
+  contentElement.textContent = content;
+
+  messageElement.appendChild(senderElement);
+  messageElement.appendChild(contentElement);
+
+  chatContainer.appendChild(messageElement);
+}
+
+// Recebe as mensagens existentes do servidor
+socket.on('mensagensExistentes', (mensagens) => {
+  const chatContainer = document.getElementById('chatContainer');
+  chatContainer.innerHTML = '';
+  console.log('Mensagens recebidas:', mensagens);
+  mensagens.forEach((mensagem) => {
+    adicionarMensagem(mensagem.mensagem.usuario, mensagem.mensagem.mensagem);
+  });
+});
+
+document.getElementById('enviarMensagemButton').addEventListener('click', () => {
+  const mensagemInput = document.getElementById('mensagemInput').value;
+  const usuarioElement = document.getElementById('usuarioValue');
+  const messageCaracteres = document.getElementById('limite');
+  const mensagem = {
+    usuario: usuarioElement.textContent,
+    mensagem: mensagemInput
+  };
+if(mensagemInput.length <= 50){
+  socket.emit('enviarMensagem', mensagem);
+  mensagemInput.value = '';
+  adicionarMensagem(mensagem.usuario, mensagem.mensagem);
+  messageCaracteres.textContent = ""
+}else{
+  event.preventDefault(); 
+  messageCaracteres.textContent = "Mensagem muito longa."
+}
+ 
+
+  // Limpa o campo de entrada de mensagem
+
+  
+  console.log('Nova mensagem enviada:', mensagem.usuario, mensagem.mensagem);
+
+});
+
+socket.on('redirecionarLogin', () => {
+  window.location.href = '/login'; // Redirecionar para a rota de login
+});
+document.getElementById('mensagemInput').addEventListener('keyup', (event) => {
+  if (event.key === 'Enter') {
+    // Execute a função que envia a mensagem aqui
+    document.getElementById('enviarMensagemButton').click();
+  }
+})
+function inicio(){
+  window.location.href = "/";
+}
+    // Recebe uma nova mensagem do servidor
+   
+  </script>
+  
+  
+</body>
+</html>
