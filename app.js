@@ -132,9 +132,11 @@ app.post('/cadastro', async (req, res) => {
     // Verifica se o usuário já está cadastrado
     const usuarioExistente = await collection.findOne({ usuario });
 
+    // Define a variável mensagem com base na condição
+    const mensagem = usuarioExistente ? 'Usuário já cadastrado' : '';
+
     if (usuarioExistente) {
-      const mensagem = 'Usuário já cadastrado';
-      return res.render('cadastro', { mensagem });
+      return res.render('cadastro', { mensagem }); // Corrigido: Passa a variável 'mensagem' para o template
     }
 
     // Gera o hash da senha usando o bcrypt
@@ -145,12 +147,13 @@ app.post('/cadastro', async (req, res) => {
     const resultado = await collection.insertOne(novoUsuario);
     console.log('Novo usuário cadastrado:', resultado.insertedId);
 
-    res.render('login');
+    res.render('login', { mensagem: '' }); // Corrigido: Passa uma string vazia para a variável 'mensagem'
   } catch (error) {
     console.error('Erro ao cadastrar usuário:', error);
     res.status(500).send('Ocorreu um erro ao cadastrar o usuário');
   }
-}); 
+});
+
 app.get('/logout', (req, res) => {
   // Remova as informações do usuário da sessão
   req.session.usuario = null;
