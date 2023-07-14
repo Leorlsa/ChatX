@@ -5,7 +5,7 @@
   "main": "nenhum",
   "scripts": {
     "test": "nenhum",
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "author": "Leo de sa",
   "license": "ISC",
