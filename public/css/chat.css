@@ -1,17 +1,20 @@
-
-    body {
+body {
       background-color: #1E1E1E;
       margin: 0;
       padding: 0;
       font-family: 'Quicksand', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .navbar {
+.navbar {
         background-color: #262626;
-        height: 93px;
+        height: 70px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 10px;
+        padding: 0 20px;
+        width: 100%;
       }
       .navbar p {
         color: #fff;
@@ -23,57 +26,98 @@
       .chatx{
         cursor: pointer;
       }     
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
+.container {
+      max-width: 800px;
+      margin: 20px auto;
       padding: 20px;
       color: #fff;
+      background-color: #2a2a2a;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
     
-    .chat {
+.chat {
       background-color: #333;
-      padding: 10px;
-      border-radius: 5px;
+      padding: 20px;
+      border-radius: 10px;
+      max-height: 500px;
+      overflow-y: auto;
     }
     
-    .message {
-      margin-bottom: 10px;
+.message {
+      margin-bottom: 15px;
+      padding: 10px;
+      background-color: #444;
+      border-radius: 5px;
     }
     
     .message .sender {
       font-weight: bold;
-      color: #007bff;
+      color: #1E90FF;
+      display: block;
+      margin-bottom: 5px;
     }
     
     .message .content {
-      color: #fff;
+      color: #ddd;
     }
     
-    .input-group {
+.input-group {
       display: flex;
       margin-top: 20px;
+      background-color: #2a2a2a;
+      border-radius: 5px;
+      padding: 10px;
     }
     
     .input-group input {
       flex-grow: 1;
-      padding: 8px;
+      padding: 10px;
       border: none;
       border-radius: 5px;
-      font-size: 14px;
+      font-size: 16px;
+      background-color: #444;
+      color: #fff;
+      margin-right: 10px;
     }
     
     .input-group button {
-      padding: 8px 16px;
-      background-color: #007bff;
+      padding: 10px 20px;
+      background-color: #1E90FF;
       color: #fff;
       border: none;
       border-radius: 5px;
-      font-size: 14px;
+      font-size: 16px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
-#categoriaValue{
-  display: none;
-}
-#usuarioValue{
-  display:none;
-}
+    
+    .input-group button:hover {
+      background-color: #1C86EE;
+    }
+@media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .input-group {
+        flex-direction: column;
+      }
+      
+      .input-group input {
+        margin-bottom: 10px;
+        margin-right: 0;
+      }
+      
+      .input-group button {
+        width: 100%;
+      }
+    }
+    
+    #categoriaValue{
+      display: none;
+    }
+    #usuarioValue{
+      display:none;
+    }
+

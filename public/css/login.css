@@ -1,65 +1,70 @@
 body {
-    background-color: #222;
+    background-color: #1E1E1E;
     font-family: 'Quicksand', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
-  }
+}
   
-  .container {
-    width: 500px;
-    height: 280px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #333;
+.container {
+    width: 400px;
+    padding: 30px;
+    background-color: #262626;
     color: #fff;
-    border-radius: 5px;
-    text-align: center; /
-  }
-  
-  
-  h2 {
+    border-radius: 10px;
     text-align: center;
-  }
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
   
-  .input-group {
-    margin-bottom: 10px;
-  }
   
-  label {
-    margin-right: 300px;
+h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+  
+.input-group {
+    margin-bottom: 15px;
+}
+  
+label {
     display: block;
-    margin-bottom: 5px;
-  }
+    text-align: left;
+    margin-bottom: 8px;
+    padding-right: 20px; /* Ajuste o valor conforme necessário */
+    color: #c3c3c3;
+}
   
-  input[type="text"],
-  input[type="password"] {
-    width: 70%;
-    padding: 10px;
-    margin: 0 auto; /* Centraliza horizontalmente */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
     border: none;
-    border-radius: 3px;
-    background-color: #c3c3c3;
+    border-radius: 5px;
+    background-color: #444;
+    color: #fff;
+}
     
   }
   
-  button {
+button {
     display: block;
-    width: 30%;
+    width: 50%;
     margin: 30px auto 0; /* Margem superior de 20 pixels */
-    padding: 10px;
+    padding: 12px;
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
-  }
+    transition: background-color 0.3s ease;
+}
   
   
-  button:hover {
+button:hover {
     background-color: #0056b3;
-  }
+}
   .links {
     display: flex;
     flex-direction: column;
@@ -74,14 +79,15 @@ body {
     margin-top: 8px; /* Ajuste o valor conforme necessário */
   }
   
-  .links a {
+.links a {
     text-decoration: none;
     font-size: 14px;
-    color: #c3c3c3;
+    color: #007bff;
     display: block;
     white-space: nowrap;
     margin-bottom: -5px; /* Ajuste o valor conforme necessário */
-  }
-  
-  
-  
+}
+.links a:hover {
+    text-decoration: underline;
+}
+
