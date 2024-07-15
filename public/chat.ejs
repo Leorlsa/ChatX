@@ -4,6 +4,7 @@
   <title>Chat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/css/chat.css">
+  <script src="/socket.io/socket.io.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
@@ -12,6 +13,7 @@
   <div class="navbar">
     <p class="chatx" onclick="inicio()">ChatX</p>
   </div>
+  <div class="container">
   <h2 id="categoriaValue"><%= categoria %></h2>
 
 
@@ -57,6 +59,8 @@ socket.emit('obterMensagens');
 function adicionarMensagem(sender, content) {
   console.log('Nova mensagem recebida:', sender, content);
   const chatContainer = document.getElementById('chatContainer');
+  const mensagemInput = document.getElementById('mensagemInput');
+  const messageCaracteres = document.getElementById('limite');
 
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
@@ -86,29 +90,20 @@ socket.on('mensagensExistentes', (mensagens) => {
 });
 
 document.getElementById('enviarMensagemButton').addEventListener('click', () => {
-  const mensagemInput = document.getElementById('mensagemInput').value;
-  const usuarioElement = document.getElementById('usuarioValue');
-  const messageCaracteres = document.getElementById('limite');
-  const mensagem = {
-    usuario: usuarioElement.textContent,
-    mensagem: mensagemInput
-  };
-if(mensagemInput.length <= 50){
-  socket.emit('enviarMensagem', mensagem);
-  mensagemInput.value = '';
-  adicionarMensagem(mensagem.usuario, mensagem.mensagem);
-  messageCaracteres.textContent = ""
-}else{
-  event.preventDefault(); 
-  messageCaracteres.textContent = "Mensagem muito longa."
-}
- 
+  const mensagem = mensagemInput.value;
+  const usuario = document.getElementById('usuarioValue').textContent;
 
-  // Limpa o campo de entrada de mensagem
+  if (mensagem.length <= 50) {
+    socket.emit('enviarMensagem', { usuario, mensagem });
+    mensagemInput.value = '';
+    adicionarMensagem(usuario, mensagem);
+    messageCaracteres.textContent = "";
+  } else {
+    event.preventDefault();
+    messageCaracteres.textContent = "Mensagem muito longa.";
+  }
 
-  
-  console.log('Nova mensagem enviada:', mensagem.usuario, mensagem.mensagem);
-
+  console.log('Nova mensagem enviada:', usuario, mensagem);
 });
 
 socket.on('redirecionarLogin', () => {
@@ -130,3 +125,4 @@ function inicio(){
   
 </body>
 </html>
+
